@@ -1,0 +1,11 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
+        "playwright"
+    ],
+    "rules": {
+        "@typescript-eslint/no-floating-promises": "error",
+        "playwright/missing-playwright-await": "error"  
+    }
+}
