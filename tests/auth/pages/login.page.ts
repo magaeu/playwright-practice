@@ -2,11 +2,11 @@ import { Locator, Page } from "@playwright/test";
 
 export class LoginPage {
   private readonly page: Page;
-   private readonly emailField: Locator;
-   private readonly passwordField: Locator;
-   private readonly loginButton: Locator;
-   private readonly cancelButton: Locator;
-   private readonly errorMessage: Locator;
+  private readonly emailField: Locator;
+  private readonly passwordField: Locator;
+  private readonly loginButton: Locator;
+  private readonly cancelButton: Locator;
+  private readonly errorMessage: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,35 +17,40 @@ export class LoginPage {
     this.errorMessage = this.page.locator('#errorMsg');
   }
 
-  async goTo() : Promise<void> {
-    await this.page.goto('login.html');
+  async goTo(): Promise<void> {
+    await this.page.goto('login.html',
+      { waitUntil: 'domcontentloaded' });
   }
 
-  async getUrl() : Promise<string> {
+  async getUrl(): Promise<string> {
     return this.page.url();
   }
 
-  async fillEmail(email: string) : Promise<void> {
+  async fillEmail(email: string): Promise<void> {
     await this.emailField.fill(email);
   }
 
 
-  async fillPassword(password: string) : Promise<void> {
+  async fillPassword(password: string): Promise<void> {
     await this.passwordField.fill(password);
   }
 
 
-  async clickLogin() : Promise<void> {
+  async clickLogin(): Promise<void> {
     await this.loginButton.click();
   }
 
-  async login(email: string, password: string) : Promise<void> {
+  async clickCancel(): Promise<void> {
+    await this.cancelButton.click();
+  }
+
+  async login(email: string, password: string): Promise<void> {
     await this.fillEmail(email);
     await this.fillPassword(password);
     await this.clickLogin();
   }
 
-  async getErrorMessage() : Promise<string> {
+  async getErrorMessage(): Promise<string> {
     return (await this.errorMessage.textContent()) || '';
   }
 }
