@@ -26,11 +26,14 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://testpages.eviltester.com/apps/basiccart',
+    baseURL: 'https://testpages.eviltester.com/apps/basiccart/',
 
     headless: true, // Run in UI mode
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',
+    launchOptions: {
+      slowMo: 50,
+    }
   },
 
   /* Configure projects for major browsers */

@@ -13,7 +13,7 @@ export const test = base.extend<AuthFixtures>({
     const email = 'ul36730333';
     const user = {
       username: email,
-      password: `${email}__PASS`,
+      password: `${email}_PASS`,
     };
     await use(user);
   },

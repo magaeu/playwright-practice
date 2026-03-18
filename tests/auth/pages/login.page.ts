@@ -11,29 +11,29 @@ export class LoginPage {
     this.page = page;
     this.emailField = this.page.locator('#customerId');
     this.passwordField = this.page.locator('#password');
-    this.loginButton = this.page.locator('button=(type="submit")');
+    this.loginButton = this.page.locator('button[type="submit"]');
     this.cancelButton = this.page.locator('#cancelBtns');
   }
 
-  async goTo() {
-    await this.page.goto('/login.html');
+  async goTo() : Promise<void> {
+    await this.page.goto('login.html');
   }
 
-  async fillEmail(email: string) {
+  async fillEmail(email: string) : Promise<void> {
     await this.emailField.fill(email);
   }
 
 
-  async fillPassword(password: string) {
+  async fillPassword(password: string) : Promise<void> {
     await this.passwordField.fill(password);
   }
 
 
-  async clickLogin() {
+  async clickLogin() : Promise<void> {
     await this.loginButton.click();
   }
 
-  async login(email: string, password: string) {
+  async login(email: string, password: string) : Promise<void> {
     await this.fillEmail(email);
     await this.fillPassword(password);
     await this.clickLogin();

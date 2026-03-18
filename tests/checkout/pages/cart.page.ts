@@ -12,19 +12,19 @@ export class CartPage {
         this.checkoutButton = this.page.locator('#checkoutBtn');
     }
 
-    async getUrl() {
+    async getUrl(): Promise<string> {
         return this.page.url();
     }
 
-    async getUserInfo() {
-        return await this.userInfo.textContent();
+    async getUserInfo(): Promise<string> {
+        return await this.userInfo.innerText();
     }
 
-    async getCartItems() {
+    async getCartItems(): Promise<string[]> {
         return await this.cartItems.allTextContents();
     }
 
-    async clickCheckout() {
+    async clickCheckout() : Promise<void> {
         await this.checkoutButton.click();
     }
 }
