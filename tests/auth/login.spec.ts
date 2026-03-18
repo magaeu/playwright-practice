@@ -1,6 +1,9 @@
 import { test, expect } from '../fixtures/auth';
 
-test('user can log in', async ({ loginSteps, page }) => {
-  await loginSteps.login("huhu@huhu.com", "huhu123");
-  await expect(page).toHaveURL('/dashboard');
+test.describe('Log in', () => {
+  test('User logs in with valid credentials', async ({ authenticatedPage, page }) => {
+    await expect(authenticatedPage.getUserInfo).toBe('ul36730333');
+    await expect(authenticatedPage.getUrl).toContain('/cart.html');
+  });
+
 });

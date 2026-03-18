@@ -1,19 +1,22 @@
 import { Locator, Page } from "@playwright/test";
 
 export class LoginPage {
-   readonly emailField: Locator;
-   readonly passwordField: Locator;
-   readonly loginButton: Locator;
+  private readonly page: Page;
+   private readonly emailField: Locator;
+   private readonly passwordField: Locator;
+   private readonly loginButton: Locator;
+   private readonly cancelButton: Locator;
 
-  constructor(private page: Page) {
+  constructor(page: Page) {
     this.page = page;
-    this.emailField = page.locator('id=input-email');
-    this.passwordField = page.locator('id=input-password');
-    this.loginButton = page.locator('input:has-text("Login")');
+    this.emailField = this.page.locator('#customerId');
+    this.passwordField = this.page.locator('#password');
+    this.loginButton = this.page.locator('button=(type="submit")');
+    this.cancelButton = this.page.locator('#cancelBtns');
   }
 
   async goTo() {
-    await this.page.goto('/index.php?route=account/login');
+    await this.page.goto('/login.html');
   }
 
   async fillEmail(email: string) {

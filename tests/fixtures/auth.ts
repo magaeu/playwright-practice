@@ -1,24 +1,29 @@
-import { test as base, expect, type Page } from '@playwright/test';
+import { test as base } from '@playwright/test';
 import { LoginPage } from '../auth/pages/login.page';
+import { CartPage } from '../checkout/pages/cart.page';
 
 type AuthFixtures = {
-  loginSteps: {
-    login: (username: string, password: string) => Promise<void>;
-  };
+  loginPage: LoginPage;
+  authenticatedPage: CartPage;
+  testUser: { username: string; password: string };
 };
 
 export const test = base.extend<AuthFixtures>({
-  loginSteps: async ({ page }, use) => {
-    const loginSteps = {
-      async login(username: string, password: string) {
-        const loginPage = new LoginPage(page);
-        await loginPage.goTo();
-        await loginPage.login(username, password);
-      }
+ testUser: async ({}, use) => {
+    const email = 'ul36730333';
+    const user = {
+      username: email,
+      password: `${email}__PASS`,
     };
+    await use(user);
+  },
 
-    await use(loginSteps);
+  authenticatedPage: async ({ page, testUser }, use) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goTo();
+    await loginPage.login(testUser.username, testUser.password);
+    await use(new CartPage(page));
   }
 });
 
-export { expect };
+export { expect } from '@playwright/test';
