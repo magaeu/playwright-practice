@@ -6,17 +6,23 @@ export class LoginPage {
    private readonly passwordField: Locator;
    private readonly loginButton: Locator;
    private readonly cancelButton: Locator;
+   private readonly errorMessage: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.emailField = this.page.locator('#customerId');
     this.passwordField = this.page.locator('#password');
-    this.loginButton = this.page.locator('button[type="submit"]');
+    this.loginButton = this.page.getByRole('button', { name: 'Login', exact: true });
     this.cancelButton = this.page.locator('#cancelBtns');
+    this.errorMessage = this.page.locator('#errorMsg');
   }
 
   async goTo() : Promise<void> {
     await this.page.goto('login.html');
+  }
+
+  async getUrl() : Promise<string> {
+    return this.page.url();
   }
 
   async fillEmail(email: string) : Promise<void> {
@@ -37,5 +43,9 @@ export class LoginPage {
     await this.fillEmail(email);
     await this.fillPassword(password);
     await this.clickLogin();
+  }
+
+  async getErrorMessage() : Promise<string> {
+    return (await this.errorMessage.textContent()) || '';
   }
 }
