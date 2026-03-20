@@ -57,4 +57,6 @@ npx playwright test --headed
 - Combine api and ui usage in one single test.
 - Use fixtures as common steps to avoid code duplication.
 - Use POM to provide maintanability.
+- Set sessionStorage and log in as authenticated user.
+- Mock api response to emulate failed response.
 - Aim to address some important points on automation pointed out by Soujorit Das in this [post](https://medium.com/p/447c08416174).

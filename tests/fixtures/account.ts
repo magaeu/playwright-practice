@@ -58,7 +58,9 @@ export const test = base.extend<AccountFixtures>({
     const userPage = new UserPage(page);
     await userPage.goTo();
     await page.waitForURL('**/user.html', 
-      { waitUntil: 'domcontentloaded' });
+      { 
+        waitUntil: 'domcontentloaded' 
+      });
     await use(userPage);
   }
 });
