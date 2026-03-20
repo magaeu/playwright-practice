@@ -59,4 +59,5 @@ npx playwright test --headed
 - Use POM to provide maintanability.
 - Set sessionStorage and log in as authenticated user.
 - Mock api response to emulate failed response.
+- Accessibility check on a broken site.
 - Aim to address some important points on automation pointed out by Soujorit Das in this [post](https://medium.com/p/447c08416174).
