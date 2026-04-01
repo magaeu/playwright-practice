@@ -22,7 +22,10 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['json', { outputFile: './playwright-report/report.json' }],
+    ['html', { outputDir: './playwright-report' }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
@@ -30,7 +33,7 @@ export default defineConfig({
 
     headless: true, // Run in UI mode
     screenshot: 'only-on-failure',
-    trace: 'retain-on-failure',
+    trace: 'on-first-retry',
     launchOptions: {
       slowMo: 100,
     }
@@ -40,17 +43,17 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 720 } },
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { ...devices['Desktop Firefox'], viewport: { width: 1280, height: 720 } },
     },
 
     {
       name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      use: { ...devices['Desktop Safari'], viewport: { width: 1280, height: 720 } },
     },
 
     /* Test against mobile viewports. */
