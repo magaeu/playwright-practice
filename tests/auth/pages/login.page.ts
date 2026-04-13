@@ -17,9 +17,10 @@ export class LoginPage {
     this.errorMessage = this.page.locator('#errorMsg');
   }
 
-  async goTo(): Promise<void> {
+  async goTo(): Promise<LoginPage> {
     await this.page.goto('login.html',
       { waitUntil: 'domcontentloaded' });
+    return this;
   }
 
   async getUrl(): Promise<string> {

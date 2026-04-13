@@ -61,3 +61,6 @@ npx playwright test --headed
 - Mock api response to emulate failed response.
 - Accessibility check on a broken site.
 - Aim to address some important points on automation pointed out by Soujorit Das in this [post](https://medium.com/p/447c08416174).
+- Built to provide a resilient framework [reference](https://www.ministryoftesting.com/articles/creating-a-resilient-test-framework-with-the-playwright-page-object-model-pom)
+
+---

@@ -15,8 +15,9 @@ export class UserPage {
         this.logoutButton = this.page.locator('#logoutBtn');
     }
 
-    async goTo() : Promise<void> {
+    async goTo() : Promise<UserPage> {
         await this.page.goto('user.html');
+        return this;
     }
 
     async getUrl(): Promise<string> {

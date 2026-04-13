@@ -10,12 +10,13 @@ export class ConfirmationPage {
         this.confirmationMessage = this.page.locator('#confirmation-message');
     }
 
-    async goTo(): Promise<void> {
+    async goTo(): Promise<ConfirmationPage> {
         await this.page.goto(this.url);
+        return this;
     }
 
-    async getUrl(): Promise<string> {       
-        return this.page.url();   
+    async getUrl(): Promise<String> {       
+        return await this.page.url();
     }
 
     async getConfirmationMessage(): Promise<string> {

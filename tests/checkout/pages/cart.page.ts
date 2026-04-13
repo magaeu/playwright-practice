@@ -12,8 +12,9 @@ export class CartPage {
         this.checkoutButton = this.page.locator('#checkoutBtn');
     }
 
-    async getUrl(): Promise<string> {
-        return this.page.url();
+    async getUrl(): Promise<CartPage> {
+        await this.page.url();
+        return this;
     }
 
     async getUserInfo(): Promise<string> {

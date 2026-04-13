@@ -20,11 +20,12 @@ export class CheckoutPage {
         this.submitButton = this.page.locator('#checkout-shipping-continue');
     }
 
-    async goTo() : Promise<void> {
+    async goTo() : Promise<CheckoutPage> {
         await this.page.goto(
             this.url,
             {waitUntil: 'domcontentloaded'}
         );
+        return this;
     }
 
     async fillUserDetails(firstName: string, lastName: string, address: string, city: string, postalCode: string): Promise<void> {
