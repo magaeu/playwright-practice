@@ -1,15 +1,15 @@
 import { test, expect } from '../fixtures/account';
 
 test.describe('User Account', () => {
-    test('View account details when logged in', async ({ userPage, apiClient, authenticatedUserPage, testUser }) => {
-        await expect(userPage.getUrl()).resolves.toContain('/user.html');
-        await expect(userPage.getUserHeaderTitle()).resolves.toContain('User Account');
-        await expect(userPage.getUserMessage()).resolves.toContain(`Welcome back, ${testUser.username}!`);
+    test('View account details when logged in', async ({ userPage, testUser, authenticatedUserPage }) => {
+        await expect(await userPage.getUrl()).toContain('/user.html');
+        await expect(await userPage.getUserHeaderTitle()).toContain('User Account');
+        await expect(await userPage.getUserMessage()).toContain(`Welcome back, ${testUser.username}!`);
     });
 
     test('View account details when not logged in', async ({ userPage }) => {
-        await expect(userPage.getUrl()).resolves.toContain('/user.html');
-        await expect(userPage.getUserMessage()).resolves.toContain('You are not logged in.');
-        await expect(userPage.getLoginButton()).resolves.toBeVisible();
+        await expect(await userPage.getUrl()).toContain('/user.html');
+        await expect(await userPage.getUserMessage()).toContain('You are not logged in.');
+        await expect(await userPage.getLoginButton()).toBeVisible();
     });
 });

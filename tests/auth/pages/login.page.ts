@@ -31,11 +31,9 @@ export class LoginPage {
     await this.emailField.fill(email);
   }
 
-
   async fillPassword(password: string): Promise<void> {
     await this.passwordField.fill(password);
   }
-
 
   async clickLogin(): Promise<void> {
     await this.loginButton.click();

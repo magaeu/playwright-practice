@@ -1,33 +1,45 @@
-import { APIRequestContext, test as base } from '@playwright/test';
+import { APIRequestContext, APIResponse, test as base } from '@playwright/test';
 import { UserPage } from '../account/pages/user.page';
 
 type AccountFixtures = {
   userPage: UserPage,
   testUser: { username: string; password: string };
-  apiClient: APIRequestContext;
+  loginResponse: APIResponse;
+  customerId: string;
+  sessionId: string;
   authenticatedUserPage: UserPage;
 };
-
-let customerId = '';
-let sessionId = '';
 
 export const test = base.extend<AccountFixtures>({
   userPage: async ({ page }, use) => {
     const userPage = new UserPage(page);
     await userPage.goTo();
+
     await use(userPage);
   },
 
-  apiClient: async ({ request, testUser }, use) => {
+  loginResponse: async ({ request, testUser }, use) => {
     const loginResponse = await request.post(`/api/basicstore/users/${testUser.username}/authenticate`, {
       data: {
         password: testUser.password,
       },
     });
+
+    await use(loginResponse);
+  },
+
+  customerId: async ({ loginResponse }, use) => {
     const responseJson = await loginResponse.json();
-    customerId = responseJson.customerId;
-    sessionId = responseJson.sessionId;
-    await use(request);
+    const customerId = responseJson.customerId;
+
+    await use(customerId);
+  },
+
+  sessionId: async ({ loginResponse }, use) => {
+    const responseJson = await loginResponse.json();
+    const sessionId = responseJson.sessionId;
+
+    await use(sessionId);
   },
 
   testUser: async ({ }, use) => {
@@ -36,19 +48,20 @@ export const test = base.extend<AccountFixtures>({
       username: email,
       password: `${email}_PASS`,
     };
+
     await use(user);
   },
 
-  authenticatedUserPage: async ({ page, context }, use) => {
+  authenticatedUserPage: async ({ page, context, customerId, sessionId }, use) => {
     await context.addCookies([
-      { 
-        name: 'basicCartCustomerId', 
-        value: customerId, 
-        path: '/', 
+      {
+        name: 'basicCartCustomerId',
+        value: customerId,
+        path: '/',
         domain: 'testpages.eviltester.com'
       },
-      { 
-        name: 'basicCartSessionId', 
+      {
+        name: 'basicCartSessionId',
         value: sessionId,
         path: '/',
         domain: 'testpages.eviltester.com'
@@ -57,10 +70,11 @@ export const test = base.extend<AccountFixtures>({
 
     const userPage = new UserPage(page);
     await userPage.goTo();
-    await page.waitForURL('**/user.html', 
-      { 
-        waitUntil: 'domcontentloaded' 
+    await page.waitForURL('**/user.html',
+      {
+        waitUntil: 'domcontentloaded'
       });
+
     await use(userPage);
   }
 });
